@@ -33,9 +33,6 @@
         <el-option label="Da" value="da" />
         <el-option label="Nu" value="nu" />
       </el-select>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="searchByProximity">
-        Cauta
-      </el-button>
       <br>
       <!--      <h6>Proximity search</h6>-->
       <div class="el-select filter-item el-select--medium">
@@ -46,9 +43,9 @@
           @placechanged="getAddressData"
         />
       </div>
-      <el-input v-model="query.radius" type="number" clearable placeholder="Meter radius" style="width: 250px;" class="filter-item" />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        Search nearby volunteers
+      <el-input v-model="query.radius" type="number" clearable placeholder="Meter radius" style="width: 250px;" class="filter-item" @change="handleFilter" />
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="searchByProximity">
+        Cauta
       </el-button>
     </div>
 
@@ -186,6 +183,7 @@ export default {
         has_car: '',
         verified: '',
         has_traning: '',
+        radius: 500,
       },
       volunteerModel: '',
       loadingButton: false,
@@ -226,9 +224,10 @@ export default {
      */
     getAddressData: function(addressData, placeResultData, id) {
       // this.address = addressData;
-      // console.log(addressData, placeResultData, id)
+      console.log(addressData, placeResultData, id);
       this.query.latitude = addressData.latitude;
       this.query.longitude = addressData.longitude;
+      this.handleFilter();
     },
     editVolunteerDialog(volunteer){
       this.volunteerModel = volunteer;

@@ -24,6 +24,7 @@ class VolunteersController extends Controller
     {
         $searchParams = $request->all();
         $userQuery = Volunteer::query();
+
         $limit = Arr::get($searchParams, 'limit', 15);
 
         $keyword = Arr::get($searchParams, 'keyword', '');
@@ -33,6 +34,10 @@ class VolunteersController extends Controller
         $verified = Arr::get($searchParams, 'verified', '');
         $has_traning = Arr::get($searchParams, 'has_traning', '');
         $county = Arr::get($searchParams, 'county', '');
+
+        $longitude = Arr::get($searchParams, 'longitude', '');
+        $latitude = Arr::get($searchParams, 'latitude', '');
+        $innerRadius = Arr::get($searchParams, 'innerRadius', '');
 
         if (!empty($keyword)) {
             $userQuery->where(function ($query) use ($keyword) {
@@ -54,6 +59,12 @@ class VolunteersController extends Controller
             $userQuery->whereHas("user.roles", function ($q) {
                 $q->where("name", "admin");
             });
+        }
+
+        if (!empty($longitude) && !empty($latitude) && !empty($innerRadius)) {
+            //        $query = Volunteer::geofence($latitude, $longitude, $innerRadius, $outerRadius);
+            $userQuery->geofence($latitude, $longitude, $innerRadius, 0);
+
         }
 
         if (!empty($has_car)) {
@@ -90,6 +101,7 @@ class VolunteersController extends Controller
         $innerRadius = $searchParams['inner_radius'];
         $outerRadius = $searchParams['outer_radius'];
         $query = Volunteer::geofence($latitude, $longitude, $innerRadius, $outerRadius);
+
         $all = $query->get();
 
     }
