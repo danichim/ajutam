@@ -4,49 +4,36 @@
       <h3 class="title">
         Va ajutam din Cluj - Inscriere Voluntari
       </h3>
-      <el-card>
-
-        <div>
-          <p>Salut! Ne bucurăm că ești aici și vrei să ajuți și tu &icirc;mpreună cu noi și &icirc;ți mulțumim! Pentru a &icirc;ncepe colaborarea, să ne prezentăm.&nbsp;</p>
-          <p><strong>Cum a apărut grupul?</strong></p>
-          <p>Acum mai mult ca oric&acirc;nd este nevoie de implicare și solidaritate. Odată cu trecerea Rom&acirc;niei la scenariul 3 al crizei Coronavirus, am pornit &icirc;n Cluj-Napoca acest grup de solidaritate comunitară &rdquo;VĂ AJUTĂM DIN CLUJ!&rdquo;</p>
-          <p><strong>Cine face parte din grup?</strong></p>
-          <p>Suntem deja peste 6000 de membri, cetățeni activi, sub coordonarea a patru organizații clujene implicate civic: Vedem Just, Civic Suport, Clujul Sustenabil, la care s-a alăturat și Center for peace and Violence Prevention. Ne alăturăm astfel orașelor București, Sibiu, Arad și Constanța, care au pornit inițiative similare pentru a oferi sprijin cetățenilor și autorităților &icirc;n gestionarea crizei.</p>
-          <p><strong>Ce ne propunem?</strong></p>
-          <p>Ne dorim un spațiu civic virtual &icirc;n care să reunim clujenii pentru a trece c&acirc;t mai bine de această perioadă de criză. Vrem să oferim sprijin pentru cei aflați &icirc;n imposibilitatea de a se aproviziona pentru a reduce riscurile expunerii lor la virus. Vom ajuta persoane &icirc;n v&acirc;rstă, persoane cu afecțiuni specifice sau familii cu copii care nu trebuie sau nu pot să iasă din locuințe pentru cumpărături sau medicamente.</p>
-          <p>Facem apel la responsabilitate și organizare civică pentru că &icirc;mpreună putem face mai mult.</p>
-          <p><strong>Cum facem asta?</strong></p>
-          <p>&Icirc;n primul r&acirc;nd prin organizarea eficientă a echipei de voluntari. Prioritatea noastră este asigurarea unei activități fără riscuri și cu respectarea tuturor normelor de siguranță indicate de autorități. &Icirc;n acest scop, am dezvoltat o procedură clară și detaliată prin care să menținem at&acirc;t siguranța voluntarilor implicați c&acirc;t și siguranța beneficiarilor.</p>
-          <p>Voluntarii trec printr-un proces minuțios de selecție și instruire și &icirc;și asumă respectarea &icirc;ntregii proceduri. Astfel știm toți că facem mai mult bine!</p>
-          <p><strong>Cum ne propunem să ajungem la grupul țintă?</strong></p>
-          <p>Am lansat un call center, care poate fi apelat la numărul 0364.406.517 pentru ca oricine să poată apela la noi. Promovăm intens acest număr.&nbsp;</p>
-          <p>&Icirc;ncurajăm voluntarii și prietenii din grupul de Facebook &rdquo;Vă ajutăm din Cluj&rdquo; să discute cu asociațiile de proprietari și să distribuie informații despre ajutorul pe care &icirc;l putem oferi.</p>
-          <p>Există deja voluntari, &icirc;mpărțiți pe zone și căutăm &icirc;n continuare să ne mărim echipa și capacitatea de livrare.&nbsp;</p>
-          <p><strong>Cum colaborăm cu autoritățile?</strong></p>
-          <p>&Icirc;n acest moment, colaborăm cu Direcția de Sănătate Publică, Prefectura Județului Cluj și Inspectoratul pentru Situații de Urgență. Avem o procedură unică de &icirc;nscriere și instruire a voluntarilor și ne concentrăm resursele de timp, implicare, cunoștințe și materiale pentru a veni &icirc;n sprijinul comunității.</p>
-          <p>&ldquo;Vrem să ajutăm instituțiile statului &icirc;n această perioadă de criză. O rețea de voluntari precum cea a noastră poate fi un suport pentru măsurile luate de Guvern, dacă e nevoie. Dar extrem de importantă este solidaritatea &icirc;n comunitate, cea pe care o vom construi pentru a combate infecția.&rdquo; declară Cristi Danileț, reprezentant al asociației VeDem Just.</p>
-          <p><strong>Unde ne găsești?</strong></p>
-          <p>Pentru a evita propagarea virusului, ne organizăm exclusiv online, pe rețelele de socializare.</p>
-          <p>Oricine e dispus să se implice și să ajute poate găsi o formă potrivită &icirc;n grupul &rdquo;Vă ajutăm din Cluj&rdquo; <a href="https://www.facebook.com/groups/2550667518542414/">https://www.facebook.com/groups/2550667518542414/</a>.</p>
-          <p>&Icirc;ncurajează-ți prietenii să ni se alăture!</p>
-          <p>&Icirc;ți mulțumim pentru solidaritate!</p>
-          <p>Hai sa incepem!</p>
-        </div>
-        <div class="links">
-          <el-button :loading="loading" type="button" class="loginBtn loginBtn--facebook" @click="loginWithFacebook">
-            Login or Register cu Facebook
-          </el-button>
-
-          <el-button :loading="loading" type="button" class="loginBtn loginBtn--google" @click="loginWithGoogle">
-            Login or Register cu Google
-          </el-button>
-
-          <!--<el-button @click="handleLogin()">Login</el-button>-->
-        </div>
-      </el-card>
-
+      <lang-select class="set-language" />
+      <el-form-item prop="email">
+        <span class="svg-container">
+          <svg-icon icon-class="user" />
+        </span>
+        <el-input v-model="loginForm.email" name="email" type="text" auto-complete="on" :placeholder="$t('login.email')" />
+      </el-form-item>
+      <el-form-item prop="password">
+        <span class="svg-container">
+          <svg-icon icon-class="password" />
+        </span>
+        <el-input
+          v-model="loginForm.password"
+          :type="pwdType"
+          name="password"
+          auto-complete="on"
+          placeholder="password"
+          @keyup.enter.native="handleLogin"
+        />
+        <span class="show-pwd" @click="showPwd">
+          <svg-icon icon-class="eye" />
+        </span>
+      </el-form-item>
+      <el-form-item>
+        <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
+          Autentificare
+        </el-button>
+      </el-form-item>
+      <div class="tips" />
     </el-form>
-
   </div>
 </template>
 
@@ -103,67 +90,20 @@ export default {
       }
     },
     handleLogin() {
-      // this.$refs.loginForm.validate(valid => {
-      //   if (valid) {
-      this.loading = true;
-      this.$store.dispatch('user/login', this.loginForm)
-        .then(() => {
-          this.$router.push({ path: this.redirect || '/' });
-          this.loading = false;
-        })
-        .catch(() => {
-          this.loading = false;
-        });
-      //   } else {
-      //     console.log('error submit!!');
-      //     return false;
-      //   }
-      // });
-    },
-    AuthProvider(provider) {
-      var self = this;
-      this.loading = true;
-      this.$auth.authenticate(provider).then(response => {
-        self.SocialLogin(provider, response);
-      }).catch(err => {
-        console.log({ err: err });
-        this.loading = false;
-      });
-    },
-    SocialLogin(provider, response){
-      this.$store.dispatch('user/loginWithSocialNetworks', { provider: provider, data: response })
-        .then((resp) => {
-          if (resp.roles.includes('user') && !resp.volunteer){
-            this.$router.push({ path: '/voluntari/inregistrare' });
-          } else if (resp.roles.includes('user') && resp.volunteer) {
-            if (!resp.volunteer.data_acord){
-              this.$router.push({ path: '/voluntari/inregistrare?semneaza=true' });
-            } else {
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading = true;
+          this.$store.dispatch('user/login', this.loginForm)
+            .then(() => {
               this.$router.push({ path: this.redirect || '/' });
-            }
-          } else {
-            this.$router.push({ path: this.redirect || '/' });
-          }
-
-          this.loading = false;
-        })
-        .catch(() => {
-          this.loading = false;
-        });
-    },
-
-    loginWithFacebook(){
-      this.loading = true;
-      FB.getLoginStatus((response) => {
-        console.log(response);
-        if (response.status === 'connected'){
-          this.SocialLogin('facebook', { token: response.authResponse.accessToken });
+              this.loading = false;
+            })
+            .catch(() => {
+              this.loading = false;
+            });
         } else {
-          FB.login((response) => {
-            if (response.status === 'connected'){
-              this.SocialLogin('facebook', { token: response.authResponse.accessToken });
-            }
-          }, { scope: 'public_profile,email' });
+          console.log('error submit!!');
+          return false;
         }
       });
     },

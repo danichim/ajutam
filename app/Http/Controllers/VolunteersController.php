@@ -82,6 +82,18 @@ class VolunteersController extends Controller
         return new VolunteerCollection($userQuery->paginate($limit));
     }
 
+    public function indexByProximity(Request $request)
+    {
+        $searchParams = $request->all();
+        $latitude = $searchParams['latitude'];
+        $longitude = $searchParams['longitude'];
+        $innerRadius = $searchParams['inner_radius'];
+        $outerRadius = $searchParams['outer_radius'];
+        $query = Volunteer::geofence($latitude, $longitude, $innerRadius, $outerRadius);
+        $all = $query->get();
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *

@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Malhal\Geographical\Geographical;
 
 class Volunteer extends Model
 {
+    use Geographical;
 
     protected $fillable = [
         "user_id",

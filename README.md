@@ -16,11 +16,11 @@
 
 ```bash
 
-sudo apt install php-cli
-sudo apt install composer
+# php
+sudo apt install php-cli composer
 
-sudo apt install php7.2-mbstring
-sudo apt install php7.2-simplexml
+# php extensions
+sudo apt-get install php7.2-mbstring php7.2-simplexml php7.2-gd  php7.2-zip
 
 ```
 
@@ -28,8 +28,7 @@ sudo apt install php7.2-simplexml
 
 ```bash
 
-sudo apt install nodejs
-sudo apt install npm
+sudo apt install nodejs npm
 
 ```
 

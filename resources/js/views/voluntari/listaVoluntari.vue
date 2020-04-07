@@ -33,9 +33,22 @@
         <el-option label="Da" value="da" />
         <el-option label="Nu" value="nu" />
       </el-select>
-
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="searchByProximity">
         Cauta
+      </el-button>
+      <br>
+      <!--      <h6>Proximity search</h6>-->
+      <div class="el-select filter-item el-select--medium">
+        <vue-google-autocomplete
+          id="map"
+          classname="el-input__inner"
+          placeholder="Type address"
+          @placechanged="getAddressData"
+        />
+      </div>
+      <el-input v-model="query.radius" type="number" clearable placeholder="Meter radius" style="width: 250px;" class="filter-item" />
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+        Search nearby volunteers
       </el-button>
     </div>
 
@@ -136,7 +149,7 @@
 
 <script>
 import Resource from '@/api/resource';
-
+import VueGoogleAutocomplete from 'vue-google-autocomplete';
 import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
 import waves from '@/directive/waves'; // Waves directive
 import permission from '@/directive/permission'; // Permission directive
@@ -148,7 +161,7 @@ import axios from 'axios';
 const volunteersResource = new Resource('volunteers');
 export default {
   name: 'ListaVoluntari',
-  components: { Pagination },
+  components: { Pagination, VueGoogleAutocomplete },
   directives: { waves, permission, role },
   data(){
     const validateEmail = (rule, value, callback) => {
@@ -205,6 +218,18 @@ export default {
     });
   },
   methods: {
+    /**
+     * When the location found
+     * @param {Object} addressData Data of the found location
+     * @param {Object} placeResultData PlaceResult object
+     * @param {String} id Input container ID
+     */
+    getAddressData: function(addressData, placeResultData, id) {
+      // this.address = addressData;
+      // console.log(addressData, placeResultData, id)
+      this.query.latitude = addressData.latitude;
+      this.query.longitude = addressData.longitude;
+    },
     editVolunteerDialog(volunteer){
       this.volunteerModel = volunteer;
 
@@ -230,6 +255,9 @@ export default {
     handleFilter() {
       this.query.page = 1;
       this.getList();
+    },
+    searchByProximity() {
+      // this.
     },
     updateVolunteer(volunteer){
       this.form = volunteer;

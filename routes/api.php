@@ -45,6 +45,8 @@ Route::group(['middleware' => ['addAccessToken','auth:api']], function () {
     Route::get('/export/solicitations', 'SolicitationsController@export')->middleware('role:admin');
 });
 
+Route::get('/volunteers-in-proximity', 'VolunteersController@indexByProximity');
+
 
 // Fake APIs
 Route::get('/table/list', function () {
